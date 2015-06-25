@@ -1,0 +1,106 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+        <com.baidu.mapapi.map.MapView
+                android:id="@+id/bmapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="40dp"
+                      android:layout_margin="20dp"
+                      android:id="@+id/ll_search"
+                      android:background="@drawable/chatting_btn_sey">
+
+            <ImageView android:layout_width="40dp"
+                       android:layout_height="40dp"
+                       android:background="@drawable/ic_hi_search"/>
+
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="40dp"
+                      android:gravity="center_vertical"
+                      android:text="请输入关键字进行搜索"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/ll_loc"
+                      android:layout_above="@+id/ll_btns"
+                      android:orientation="vertical"
+                      android:background="@drawable/chatting_btn_sey">
+
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="40dp"
+                      android:id="@+id/txtName"
+                      android:layout_marginLeft="10dp"
+                      android:gravity="center_vertical"
+                      android:textSize="20dp"
+                      android:text="名称"/>
+
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="25dp"
+                      android:id="@+id/txtLoc"
+                      android:textSize="14dp"
+                      android:layout_marginLeft="10dp"
+                      android:gravity="center_vertical"
+                      android:text="位置"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/ll_btns"
+                      android:layout_alignBottom="@+id/bmapView"
+                      android:background="@drawable/chatting_btn_sey">
+
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnOperLocation"
+                    android:layout_weight="1"
+                    android:text="收藏"/>
+
+            <Button android:id="@+id/btnTrack"
+                    android:text="导航"
+                    android:layout_weight="1"
+                    android:layout_toRightOf="@+id/btnOperLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnCurLocation"
+                android:layout_marginTop="100dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/icon_compass"
+                android:layout_alignRight="@+id/bmapView"/>
+
+        <ImageButton android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignRight="@+id/bmapView"
+                     android:layout_alignBottom="@+id/bmapView"
+                     android:layout_marginBottom="160dp"
+                     android:layout_marginRight="5dp"
+                     android:id="@+id/btnPlus"
+                     android:src="@drawable/btn_plus"/>
+
+        <ImageButton android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignRight="@+id/bmapView"
+                     android:layout_alignBottom="@+id/bmapView"
+                     android:layout_marginBottom="115dp"
+                     android:layout_marginRight="5dp"
+                     android:id="@+id/btnMinus"
+                     android:src="@drawable/btn_minus"/>
+
+    </RelativeLayout>
+</LinearLayout>
