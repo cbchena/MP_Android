@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 标题栏 -->
+    <RelativeLayout
+            android:id="@+id/rl_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/title_bar"
+            android:gravity="center_vertical" >
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:src="@drawable/chatting_btn_return"
+            android:background="@drawable/title_bar"
+            android:onClick="OnBack"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+
+        <TextView android:id="@+id/title"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerInParent="true"
+                  android:text="路线规划"
+                  android:textColor="#ffffff"
+                  android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout android:id="@+id/map"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_below="@+id/rl_layout"
+                  android:orientation="vertical">
+        <FrameLayout
+            android:id="@+id/mapview_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </FrameLayout>
+
+        <ImageButton android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignRight="@+id/mapview_layout"
+                     android:layout_alignBottom="@+id/mapview_layout"
+                     android:layout_marginBottom="50dp"
+                     android:layout_marginRight="5dp"
+                     android:onClick="OnPlus"
+                     android:id="@+id/btnPlus"
+                     android:src="@drawable/btn_plus"/>
+
+        <ImageButton android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignRight="@+id/mapview_layout"
+                     android:layout_alignBottom="@+id/mapview_layout"
+                     android:onClick="OnMinus"
+                     android:layout_marginBottom="5dp"
+                     android:layout_marginRight="5dp"
+                     android:id="@+id/btnMinus"
+                     android:src="@drawable/btn_minus"/>
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cavigator_icon"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentBottom="true"
+                android:onClick="OnNavigation"
+
+                />
+
+    </RelativeLayout>
+</RelativeLayout>
