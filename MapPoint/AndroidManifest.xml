@@ -60,6 +60,7 @@
         <activity android:name=".activity.map.BNavigatorActivity" />
         <activity android:name=".activity.map.BDRoutePlan" />
         <activity android:name=".activity.oper_loc.AddLocationActivity" />
+        <activity android:name=".activity.oper_loc.EditLocationActivity" />
         <activity android:name=".activity.oper_loc.ChoCmnTypeDialogActivity"
                   android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
                   android:alwaysRetainTaskState="true"

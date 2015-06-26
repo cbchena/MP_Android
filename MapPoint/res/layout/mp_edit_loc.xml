@@ -1,0 +1,226 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_content"
+    android:orientation="vertical">
+
+    <!-- 标题栏 -->
+    <RelativeLayout
+            android:id="@+id/rl_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/title_bar"
+            android:gravity="center_vertical" >
+
+        <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:src="@drawable/chatting_btn_return"
+                android:background="@drawable/title_bar"
+                android:onClick="OnBack"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="修改地点"
+                android:id="@+id/title"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+        <Button android:id="@+id/btnShare"
+                     android:layout_alignParentRight="true"
+                     android:layout_width="80dp"
+                     android:layout_height="40dp"
+                     android:layout_marginRight="10dp"
+                     android:layout_centerVertical="true"
+                     android:onClick="OnBtnShare"
+                     android:background="@drawable/login_btn_login"
+                     android:textColor="#ffffffff"
+                     android:text="分享"
+                     android:textSize="18dp"/>
+
+    </RelativeLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="10dp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp"
+                  android:orientation="horizontal">
+
+        <RelativeLayout android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/register_icon_bg">
+
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerInParent="true"
+                       android:src="@drawable/register_icon_phone"/>
+
+        </RelativeLayout>
+
+        <ImageButton android:layout_width="50dp"
+                     android:layout_height="50dp"
+                     android:id="@+id/btnType"
+                     android:layout_marginLeft="10dp"
+                     android:onClick="OnBtnChoose"
+                     android:background="@drawable/tab_home_check"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="10dp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp"
+                  android:orientation="horizontal">
+
+        <RelativeLayout android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/register_icon_bg">
+
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerInParent="true"
+                       android:src="@drawable/register_icon_phone"/>
+
+        </RelativeLayout>
+
+        <EditText android:text=""
+                  android:layout_weight="1"
+                  android:background="@drawable/register_text_bg"
+                  android:id="@+id/name"
+                  android:hint="    名称"
+                  android:textSize="14dp"
+                  android:maxLength="16"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="10dp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp"
+                  android:orientation="horizontal">
+
+        <RelativeLayout android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/register_icon_bg">
+
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerInParent="true"
+                       android:src="@drawable/register_icon_phone"/>
+
+        </RelativeLayout>
+
+        <EditText android:text=""
+                  android:layout_weight="1"
+                  android:background="@drawable/register_text_bg"
+                  android:id="@+id/curLoc"
+                  android:hint="    当前位置"
+                  android:textSize="14dp"
+                  android:maxLength="50"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="10dp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp"
+                  android:orientation="horizontal">
+
+        <RelativeLayout android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/register_icon_bg">
+
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerInParent="true"
+                       android:src="@drawable/register_icon_phone"/>
+
+        </RelativeLayout>
+
+        <EditText android:text=""
+                  android:layout_weight="1"
+                  android:background="@drawable/register_text_bg"
+                  android:id="@+id/tel"
+                  android:hint="    电话"
+                  android:textSize="14dp"
+                  android:numeric="integer"
+                  android:phoneNumber="true"
+                  android:maxLength="20"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="10dp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp"
+                  android:orientation="horizontal">
+
+        <RelativeLayout android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/register_icon_bg">
+
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerInParent="true"
+                       android:src="@drawable/register_icon_phone"/>
+
+        </RelativeLayout>
+
+        <EditText android:text=""
+                  android:layout_weight="1"
+                  android:background="@drawable/register_text_bg"
+                  android:id="@+id/desc"
+                  android:hint="    备注"
+                  android:textSize="14dp"
+                  android:inputType="textMultiLine"
+                  android:minLines="6"
+                  android:maxLength="200"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="10dp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp"
+                  android:orientation="horizontal">
+
+        <Button android:text="删除"
+                android:onClick="OnBtnDelete"
+                android:layout_weight="1"
+                android:background="@drawable/login_btn_login"
+                android:layout_marginRight="5dp"
+                android:textColor="#ffffffff"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <Button android:text="修改"
+                android:onClick="OnBtnUpdate"
+                android:background="@drawable/login_btn_register"
+                android:textColor="#ffffffff"
+                android:textSize="20dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

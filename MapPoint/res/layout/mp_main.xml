@@ -15,13 +15,15 @@
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="40dp"
-                      android:layout_margin="20dp"
+                      android:layout_margin="15dp"
                       android:id="@+id/ll_search"
                       android:background="@drawable/chatting_btn_sey">
 
-            <ImageView android:layout_width="40dp"
-                       android:layout_height="40dp"
-                       android:background="@drawable/ic_hi_search"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center"
+                       android:layout_marginLeft="3dp"
+                       android:src="@drawable/ic_hi_search1"/>
 
             <TextView android:layout_width="match_parent"
                       android:layout_height="40dp"
@@ -32,48 +34,53 @@
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:id="@+id/ll_loc"
-                      android:layout_above="@+id/ll_btns"
-                      android:orientation="vertical"
-                      android:background="@drawable/chatting_btn_sey">
-
-            <TextView android:layout_width="match_parent"
-                      android:layout_height="40dp"
-                      android:id="@+id/txtName"
-                      android:layout_marginLeft="10dp"
-                      android:gravity="center_vertical"
-                      android:textSize="20dp"
-                      android:text="名称"/>
-
-            <TextView android:layout_width="match_parent"
-                      android:layout_height="25dp"
-                      android:id="@+id/txtLoc"
-                      android:textSize="14dp"
-                      android:layout_marginLeft="10dp"
-                      android:gravity="center_vertical"
-                      android:text="位置"/>
-
-        </LinearLayout>
-
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/ll_btns"
                       android:layout_alignBottom="@+id/bmapView"
-                      android:background="@drawable/chatting_btn_sey">
+                      android:layout_margin="7dp"
+                      android:background="#ffffffff"
+                      android:orientation="vertical">
 
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btnOperLocation"
-                    android:layout_weight="1"
-                    android:text="收藏"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/ll_loc"
+                          android:layout_above="@+id/ll_btns"
+                          android:orientation="vertical">
 
-            <Button android:id="@+id/btnTrack"
-                    android:text="导航"
-                    android:layout_weight="1"
-                    android:layout_toRightOf="@+id/btnOperLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="25dp"
+                          android:id="@+id/txtName"
+                          android:layout_marginLeft="10dp"
+                          android:gravity="center_vertical"
+                          android:textSize="15dp"
+                          android:text="名称"/>
 
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="20dp"
+                          android:id="@+id/txtLoc"
+                          android:textSize="12dp"
+                          android:layout_marginLeft="10dp"
+                          android:gravity="center_vertical"
+                          android:text="位置"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/ll_btns">
+
+                <Button android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btnOperLocation"
+                        android:layout_weight="1"
+                        android:text="收藏"/>
+
+                <Button android:id="@+id/btnTrack"
+                        android:text="导航"
+                        android:layout_weight="1"
+                        android:layout_toRightOf="@+id/btnOperLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
         </LinearLayout>
 
         <Button android:layout_width="wrap_content"
@@ -84,22 +91,24 @@
                 android:background="@drawable/icon_compass"
                 android:layout_alignRight="@+id/bmapView"/>
 
-        <ImageButton android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
+        <ImageButton android:layout_width="40dp"
+                     android:layout_height="40dp"
                      android:layout_alignRight="@+id/bmapView"
                      android:layout_alignBottom="@+id/bmapView"
-                     android:layout_marginBottom="160dp"
+                     android:layout_marginBottom="140dp"
                      android:layout_marginRight="5dp"
                      android:id="@+id/btnPlus"
+                     android:background="#ffffffff"
                      android:src="@drawable/btn_plus"/>
 
-        <ImageButton android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
+        <ImageButton android:layout_width="40dp"
+                     android:layout_height="40dp"
                      android:layout_alignRight="@+id/bmapView"
                      android:layout_alignBottom="@+id/bmapView"
-                     android:layout_marginBottom="115dp"
+                     android:layout_marginBottom="105dp"
                      android:layout_marginRight="5dp"
                      android:id="@+id/btnMinus"
+                     android:background="#ffffffff"
                      android:src="@drawable/btn_minus"/>
 
     </RelativeLayout>

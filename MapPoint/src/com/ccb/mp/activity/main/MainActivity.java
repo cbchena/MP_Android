@@ -17,9 +17,12 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
 import com.ccb.mp.R;
-import com.ccb.mp.activity.oper_loc.AddLocationActivity;
 import com.ccb.mp.activity.map.BDRoutePlan;
+import com.ccb.mp.activity.oper_loc.AddLocationActivity;
+import com.ccb.mp.activity.oper_loc.EditLocationActivity;
+import com.ccb.mp.activity.oper_loc.LocationEntity;
 import com.ccb.mp.activity.poi.SearchDialogActivity;
+import com.ccb.mp.db.DB;
 import com.ccb.mp.task.activity_manager.ActivityManager;
 import com.ccb.mp.utils.Const;
 import com.ccb.mp.utils.Utils;
@@ -45,6 +48,7 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
             .getLogger(MainActivity.class); // 日志对象
 
     private static Context _context;
+    private static DB _db; // 数据库管理
 
     private MapView _mMapView = null;    // 地图View
     private BaiduMap _mBaidumap = null;
@@ -81,6 +85,9 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
         setContentView(R.layout.mp_main);
         ActivityManager.getInstance().addActivity(this);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout); // 淡入淡出跳转方式
+
+        if (_db == null) // 数据库管理
+            _db = new DB(this);
 
         _context = this;
 
@@ -269,19 +276,19 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
      */
     private void _showCollectLocs() {
         logger.debug("Show collect location.");
-//        List<LocationEntity> lstLocs = MainActivity.get_db().getDbManagerCommonLoc().getData();
-//        for(LocationEntity locationEntity:lstLocs) {
-//            LatLng latLng = new LatLng(Double.valueOf(locationEntity.getLat()),
-//                    Double.valueOf(locationEntity.getLng()));
-//
-//            OverlayOptions overlayOptions_marker = new MarkerOptions().position(latLng).icon(_bmpStar);
-//            Marker marker = (Marker) _mBaidumap.addOverlay(overlayOptions_marker);
-//            marker.setTitle(locationEntity.getName() + "**" + locationEntity.getLoc() + "**" + locationEntity.getId());
-//
-//            _mapCollectMarker.put(locationEntity.getId(), marker); // 将收藏的标记记录下来
-//        }
-//
-//        _updateInfo(_chkCollectLocId); // 更新当前面板信息 2015/5/28 19:21
+        List<LocationEntity> lstLocs = MainActivity.get_db().getDbManagerCommonLoc().getData();
+        for(LocationEntity locationEntity:lstLocs) {
+            LatLng latLng = new LatLng(Double.valueOf(locationEntity.getLat()),
+                    Double.valueOf(locationEntity.getLng()));
+
+            OverlayOptions overlayOptions_marker = new MarkerOptions().position(latLng).icon(_bmpStar);
+            Marker marker = (Marker) _mBaidumap.addOverlay(overlayOptions_marker);
+            marker.setTitle(locationEntity.getName() + "**" + locationEntity.getLoc() + "**" + locationEntity.getId());
+
+            _mapCollectMarker.put(locationEntity.getId(), marker); // 将收藏的标记记录下来
+        }
+
+        _updateInfo(_chkCollectLocId); // 更新当前面板信息 2015/5/28 19:21
     }
 
     /**
@@ -356,13 +363,13 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
      * @param id
      */
     private void _updateInfo(int id) {
-//        List<LocationEntity> lstLoc = MainActivity.get_db().getDbManagerCommonLoc().getDataById(id);
-//        if (lstLoc.size() > 0) {
-//            LocationEntity locationEntity = lstLoc.get(0);
-//            showCollectLoc(new LatLng(Double.valueOf(locationEntity.getLat()),
-//                    Double.valueOf(locationEntity.getLng())), locationEntity.getName()
-//                    + "**" + locationEntity.getLoc() + "**" + locationEntity.getId());
-//        }
+        List<LocationEntity> lstLoc = MainActivity.get_db().getDbManagerCommonLoc().getDataById(id);
+        if (lstLoc.size() > 0) {
+            LocationEntity locationEntity = lstLoc.get(0);
+            showCollectLoc(new LatLng(Double.valueOf(locationEntity.getLat()),
+                    Double.valueOf(locationEntity.getLng())), locationEntity.getName()
+                    + "**" + locationEntity.getLoc() + "**" + locationEntity.getId());
+        }
     }
 
     /**
@@ -527,23 +534,23 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
             intent.putExtra(Const.DATA, bundle);
             startActivityForResult(intent, AddLocationActivity.ADD_LOCATION_OK);
         } else { // 编辑
-//            intent = new Intent(getActivity(), EditLocationActivity.class);
-//            List<LocationEntity> lstLoc = MainActivity.get_db().getDbManagerCommonLoc().getDataById(_chkCollectLocId);
-//            if (lstLoc.size() > 0) {
-//                LocationEntity locationEntity = lstLoc.get(0);
-//                bundle = new Bundle();
-//                bundle.putString(Const.LOCATION, locationEntity.getLoc());
-//                bundle.putString(Const.DESC, locationEntity.getDesc());
-//                bundle.putInt(Const.TYPE, locationEntity.getType());
-//                bundle.putInt(Const.ID, locationEntity.getId());
-//                bundle.putString(Const.NAME, locationEntity.getName());
-//                bundle.putString(Const.TEL, locationEntity.getTel());
-//                bundle.putDouble(Const.LAT, Double.parseDouble(locationEntity.getLat()));
-//                bundle.putDouble(Const.LNG, Double.parseDouble(locationEntity.getLng()));
-//
-//                intent.putExtra(Const.DATA, bundle);
-//                startActivityForResult(intent, EditLocationActivity.EDIT_LOC_OK);
-//            }
+            intent = new Intent(this, EditLocationActivity.class);
+            List<LocationEntity> lstLoc = MainActivity.get_db().getDbManagerCommonLoc().getDataById(_chkCollectLocId);
+            if (lstLoc.size() > 0) {
+                LocationEntity locationEntity = lstLoc.get(0);
+                bundle = new Bundle();
+                bundle.putString(Const.LOCATION, locationEntity.getLoc());
+                bundle.putString(Const.DESC, locationEntity.getDesc());
+                bundle.putInt(Const.TYPE, locationEntity.getType());
+                bundle.putInt(Const.ID, locationEntity.getId());
+                bundle.putString(Const.NAME, locationEntity.getName());
+                bundle.putString(Const.TEL, locationEntity.getTel());
+                bundle.putDouble(Const.LAT, Double.parseDouble(locationEntity.getLat()));
+                bundle.putDouble(Const.LNG, Double.parseDouble(locationEntity.getLng()));
+
+                intent.putExtra(Const.DATA, bundle);
+                startActivityForResult(intent, EditLocationActivity.EDIT_LOC_OK);
+            }
         }
     }
 
@@ -610,14 +617,14 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
         Bundle bundle;
         if(resultCode == RESULT_OK) {  //返回成功
             switch (requestCode) {
-//                case AddLocationActivity.ADD_LOCATION_OK: // 添加数据
-//                    logger.info("Add success.");
-//                    _isClkCollectMarker = true;
-//                    bundle = data.getBundleExtra(Const.DATA);
-//                    _chkCollectLocId = bundle.getInt(Const.ID); // 获取数据ID
-//                    _handlerBtnOper.sendEmptyMessage(0); // 变更操作按钮状态 2015/5/28 18:52
-//                    refreshMarker(); // 刷新标记点
-//                    break;
+                case AddLocationActivity.ADD_LOCATION_OK: // 添加数据
+                    logger.info("Add success.");
+                    _isClkCollectMarker = true;
+                    bundle = data.getBundleExtra(Const.DATA);
+                    _chkCollectLocId = bundle.getInt(Const.ID); // 获取数据ID
+                    _handlerBtnOper.sendEmptyMessage(0); // 变更操作按钮状态 2015/5/28 18:52
+                    refreshMarker(); // 刷新标记点
+                    break;
                 case SearchDialogActivity.SEARCH_RESULT_OK: // 搜查结果
                     bundle = data.getBundleExtra(Const.DATA);
                     if (bundle != null) {
@@ -628,13 +635,13 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
                     }
 
                     break;
-//                case EditLocationActivity.EDIT_LOC_OK: // 编辑成功
-//                    logger.info("Edit success.");
-//                    _isClkCollectMarker = true;
-//                    _handlerBtnOper.sendEmptyMessage(0); // 变更操作按钮状态 2015/5/28 18:52
-//                    refreshMarker(); // 刷新标记点
-//                    _updateInfo(_chkCollectLocId); // 更新详细信息面板 2015/5/28 19:15
-//                    break;
+                case EditLocationActivity.EDIT_LOC_OK: // 编辑成功
+                    logger.info("Edit success.");
+                    _isClkCollectMarker = true;
+                    _handlerBtnOper.sendEmptyMessage(0); // 变更操作按钮状态 2015/5/28 18:52
+                    refreshMarker(); // 刷新标记点
+                    _updateInfo(_chkCollectLocId); // 更新详细信息面板 2015/5/28 19:15
+                    break;
             }
         }
 
@@ -750,6 +757,30 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 获取DB 2015/4/17 10:19
+     * @return
+     */
+    public static DB get_db() {
+        if (_db == null) {
+            _db = new DB(_context);
+        }
+
+        return _db;
+    }
+
+    /**
+     * 获取DB 2015/4/17 10:19
+     * @return
+     */
+    public static DB get_db(Context context) {
+        if (_db == null) {
+            _db = new DB(context);
+        }
+
+        return _db;
     }
 
     public static Context getMainContext() {

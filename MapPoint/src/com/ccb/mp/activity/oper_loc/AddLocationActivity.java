@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.ccb.mp.R;
+import com.ccb.mp.activity.main.MainActivity;
 import com.ccb.mp.task.activity_manager.ActivityManager;
 import com.ccb.mp.utils.Const;
 import com.knowyou.ky_sdk.FilesService;
@@ -208,22 +209,22 @@ public class AddLocationActivity extends Activity {
                 .setLng(String.valueOf(_lng))
                 .setTime(String.valueOf(System.currentTimeMillis()));
 
-//        long id = MainActivity.get_db().getDbManagerCommonLoc().add(locationEntity);
-//        if (id > 0) {
-//            Toast.makeText(AddLocationActivity.this,
-//                    "添加地点成功", Toast.LENGTH_LONG).show();
-//
-//            Intent intent = getIntent();
-//            Bundle bundle = new Bundle();
-//            bundle.putInt(Const.ID, (int) id);
-//            intent.putExtra(Const.DATA, bundle);
-//
-//            setResult(AddLocationActivity.RESULT_OK, intent);
-//            finish();
-//        } else {
-//            Toast.makeText(AddLocationActivity.this,
-//                    "添加地点失败", Toast.LENGTH_LONG).show();
-//        }
+        long id = MainActivity.get_db().getDbManagerCommonLoc().add(locationEntity);
+        if (id > 0) {
+            Toast.makeText(AddLocationActivity.this,
+                    "添加地点成功", Toast.LENGTH_LONG).show();
+
+            Intent intent = getIntent();
+            Bundle bundle = new Bundle();
+            bundle.putInt(Const.ID, (int) id);
+            intent.putExtra(Const.DATA, bundle);
+
+            setResult(AddLocationActivity.RESULT_OK, intent);
+            finish();
+        } else {
+            Toast.makeText(AddLocationActivity.this,
+                    "添加地点失败", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
