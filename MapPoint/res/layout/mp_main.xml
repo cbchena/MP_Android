@@ -67,18 +67,84 @@
                           android:layout_height="wrap_content"
                           android:id="@+id/ll_btns">
 
-                <Button android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btnOperLocation"
-                        android:layout_weight="1"
-                        android:text="收藏"/>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="40dp"
+                              android:orientation="horizontal"
+                              android:layout_weight="1">
 
-                <Button android:id="@+id/btnTrack"
-                        android:text="导航"
-                        android:layout_weight="1"
-                        android:layout_toRightOf="@+id/btnOperLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                    <Button android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="4dp"
+                            style="@style/ButtonMain"
+                            android:id="@+id/btnOperLocation"
+                            android:layout_weight="1"
+                            android:text="收藏"/>
+
+                    <View
+                        android:layout_width="1dip"
+                        android:layout_height="15dp"
+                        android:background="#ffdddddd"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="match_parent"
+                              android:orientation="horizontal"
+                              android:layout_toRightOf="@+id/btnOperLocation"
+                              android:layout_weight="1">
+
+                    <Button android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:id="@+id/btnTrack"
+                            android:layout_marginTop="4dp"
+                            style="@style/ButtonMain"
+                            android:layout_weight="1"
+                            android:text="到这去"/>
+
+                    <View
+                            android:layout_width="1dip"
+                            android:layout_height="15dp"
+                            android:background="#ffdddddd"
+                            android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="match_parent"
+                              android:orientation="horizontal"
+                              android:layout_toRightOf="@+id/btnOperLocation"
+                              android:layout_weight="1">
+
+                    <Button android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:id="@+id/btnMP"
+                            android:layout_marginTop="4dp"
+                            style="@style/ButtonMain"
+                            android:layout_weight="1"
+                            android:text="图点"/>
+
+                    <View
+                            android:layout_width="1dip"
+                            android:layout_height="15dp"
+                            android:background="#ffdddddd"
+                            android:layout_gravity="center"/>
+
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="match_parent"
+                              android:orientation="horizontal"
+                              android:layout_toRightOf="@+id/btnOperLocation"
+                              android:layout_weight="1">
+
+                    <Button android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:id="@+id/btnMe"
+                            android:layout_marginTop="4dp"
+                            style="@style/ButtonMain"
+                            android:layout_weight="1"
+                            android:text="我"/>
+
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

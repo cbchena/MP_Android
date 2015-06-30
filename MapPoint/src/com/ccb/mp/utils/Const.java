@@ -18,5 +18,6 @@ public class Const {
     public static final String LOCATION = "location";
     public static final String TEL = "tel";
     public static final String DESC = "desc";
+    public static final String CITY = "city";
 
 }

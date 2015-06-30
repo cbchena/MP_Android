@@ -17,9 +17,10 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
 import com.ccb.mp.R;
-import com.ccb.mp.activity.map.BDRoutePlan;
+import com.ccb.mp.activity.map.NavigatorConfigActivity;
 import com.ccb.mp.activity.oper_loc.AddLocationActivity;
 import com.ccb.mp.activity.oper_loc.EditLocationActivity;
+import com.ccb.mp.activity.oper_loc.EditLocationsActivity;
 import com.ccb.mp.activity.oper_loc.LocationEntity;
 import com.ccb.mp.activity.poi.SearchDialogActivity;
 import com.ccb.mp.db.DB;
@@ -61,7 +62,8 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
     private ImageButton _imgBtnPlus; // 放大
     private ImageButton _imgBtnMinus; // 放小
     private Button _btnOperLoc; // 操作位置
-    private Button _btnTrack; // 追踪
+    private Button _btnTrack; // 到这去
+    private Button _btnLocations; // 图点
     private Button _btnCurLocation; // 定位当前位置
     private LinearLayout _ll_search; // 查找布局
     private LinearLayout _ll_loc;  // 显示位置布局
@@ -139,6 +141,14 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
             @Override
             public void onClick(View view) {
                 OnTrack(view);
+            }
+        });
+
+        this._btnLocations = (Button) this.findViewById(R.id.btnMP);
+        this._btnLocations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OnLocations(view);
             }
         });
 
@@ -560,26 +570,31 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
      */
     public void OnTrack(View view) {
         logger.debug("Click button track location.");
-//        if (!_isClkCollectMarker) {
-//            logger.debug("Not choose track location.");
-//            Toast.makeText(getActivity(), "请选择已收藏的位置进行追踪", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
 
-        // 打开路线规划界面 2015/5/22 15:46
-        Intent intent = new Intent(this, BDRoutePlan.class);
+        // 打开导航配置界面 2015/6/30 11:07
+        Intent intent = new Intent(this, NavigatorConfigActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putString(Const.LOCATION, this._txtLoc.getText().toString());
+        bundle.putString(Const.CITY, _city);
         if (_clkLatLng == null) {
-            bundle.putDouble("lat", _latLng.latitude);
-            bundle.putDouble("lng", _latLng.longitude);
+            bundle.putDouble(Const.LAT, _latLng.latitude);
+            bundle.putDouble(Const.LNG, _latLng.longitude);
         } else {
-            bundle.putDouble("lat", _clkLatLng.latitude);
-            bundle.putDouble("lng", _clkLatLng.longitude);
+            bundle.putDouble(Const.LAT, _clkLatLng.latitude);
+            bundle.putDouble(Const.LNG, _clkLatLng.longitude);
         }
 
-        // 将Bundle添加到Intent里面
         intent.putExtra(Const.DATA, bundle);
         startActivity(intent);
+    }
+
+    /**
+     * 查看图点 2015/6/30 10:25
+     * @param view
+     */
+    public void OnLocations(View view) {
+        startActivityForResult(new Intent(this, EditLocationsActivity.class),
+                EditLocationsActivity.EDIT_LOCATOINS_OK);
     }
 
     /**
@@ -641,6 +656,10 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
                     _handlerBtnOper.sendEmptyMessage(0); // 变更操作按钮状态 2015/5/28 18:52
                     refreshMarker(); // 刷新标记点
                     _updateInfo(_chkCollectLocId); // 更新详细信息面板 2015/5/28 19:15
+                    break;
+                case EditLocationsActivity.EDIT_LOCATOINS_OK: // 更新数据
+                    logger.info("Edit success.");
+                    refreshMarker();
                     break;
             }
         }
