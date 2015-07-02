@@ -21,7 +21,7 @@ import com.ccb.mp.activity.map.NavigatorConfigActivity;
 import com.ccb.mp.activity.oper_loc.AddLocationActivity;
 import com.ccb.mp.activity.oper_loc.EditLocationActivity;
 import com.ccb.mp.activity.oper_loc.EditLocationsActivity;
-import com.ccb.mp.activity.oper_loc.LocationEntity;
+import com.ccb.mp.activity.oper_loc.entity.LocationEntity;
 import com.ccb.mp.activity.poi.SearchDialogActivity;
 import com.ccb.mp.db.DB;
 import com.ccb.mp.task.activity_manager.ActivityManager;

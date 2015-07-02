@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.ccb.mp.R;
 import com.ccb.mp.activity.main.MainActivity;
+import com.ccb.mp.activity.oper_loc.entity.LocationEntity;
 import com.ccb.mp.task.activity_manager.ActivityManager;
 import com.ccb.mp.utils.Const;
 import com.knowyou.ky_sdk.FilesService;

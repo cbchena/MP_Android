@@ -65,4 +65,26 @@
 
     </LinearLayout>
 
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="#ffffffff"
+                  android:orientation="vertical">
+
+        <ListView android:id="@+id/lstItem"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:divider="@null">
+
+        </ListView>
+
+        <Button android:layout_width="match_parent"
+                android:layout_height="50dp"
+                style="@style/ButtonMain"
+                android:id="@+id/btnClear"
+                android:onClick="OnClear"
+                android:text="清空历史"/>
+
+    </LinearLayout>
+
 </LinearLayout>

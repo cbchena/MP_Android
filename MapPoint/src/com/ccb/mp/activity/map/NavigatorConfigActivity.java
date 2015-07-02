@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.widget.*;
 import com.ccb.mp.R;
+import com.ccb.mp.activity.main.MainActivity;
+import com.ccb.mp.activity.oper_loc.entity.NavigatorEntity;
 import com.ccb.mp.activity.poi.SearchDialogActivity;
 import com.ccb.mp.task.activity_manager.ActivityManager;
 import com.ccb.mp.utils.Const;
@@ -21,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 导航配置界面 2015/6/30 10:50
@@ -34,6 +38,9 @@ public class NavigatorConfigActivity extends Activity{
     private TextView _txtSource; // 来源
     private TextView _txtTarget; // 目标
 
+    private ListView _lstView; // 列表
+    private NavigatorListAdapter _mNavigatorListAdapter; // 导航列表适配器
+
     private String _strloc; // 当前位置
     private String _strCity; // 城市
     private Double _lat;
@@ -46,6 +53,33 @@ public class NavigatorConfigActivity extends Activity{
         setContentView(R.layout.mp_navigator_config);
         ActivityManager.getInstance().addActivity(this);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout); // 淡入淡出跳转方式
+
+        _lstView = (ListView) this.findViewById(R.id.lstItem);
+        _lstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                NavigatorEntity navigatorEntity = _mNavigatorListAdapter.getNavigator(i);
+
+                // 打开路线规划界面 2015/7/2 16:33
+                Intent intent = new Intent(NavigatorConfigActivity.this, BDRoutePlan.class);
+                Bundle bundle = new Bundle();
+                bundle.putDouble(Const.LAT, Double.parseDouble(navigatorEntity.getLat()));
+                bundle.putDouble(Const.LNG, Double.parseDouble(navigatorEntity.getLng()));
+
+                // 将Bundle添加到Intent里面
+                intent.putExtra(Const.DATA, bundle);
+                startActivity(intent);
+
+                navigatorEntity.setTime(String.valueOf(System.currentTimeMillis()));
+                int count = MainActivity.get_db().getDbManagerNavigatorHistory().updata(navigatorEntity);
+                if (count > 0) {
+                    _getData(); // 刷新数据
+                }
+            }
+        });
+
+        _mNavigatorListAdapter = new NavigatorListAdapter(); // 初始化适配器
+        _lstView.setAdapter(_mNavigatorListAdapter);
 
         _btnSearch = (Button) this.findViewById(R.id.btnSearch);
         _txtSource = (TextView) this.findViewById(R.id.txtSource);
@@ -68,6 +102,20 @@ public class NavigatorConfigActivity extends Activity{
             _txtTarget.setText(_strloc);
         }
 
+        _getData(); // 获取历史数据 2015/7/2 16:27
+    }
+
+    /**
+     * 获取数据 2015/7/2 16:26
+     */
+    private void _getData() {
+        _mNavigatorListAdapter.clear();
+        List<NavigatorEntity> lstData = MainActivity.get_db().getDbManagerNavigatorHistory().getData();
+        for(NavigatorEntity navigatorEntity:lstData) {
+            _mNavigatorListAdapter.add(navigatorEntity);
+        }
+
+        _mNavigatorListAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -146,6 +194,21 @@ public class NavigatorConfigActivity extends Activity{
         // 将Bundle添加到Intent里面
         intent.putExtra(Const.DATA, bundle);
         startActivity(intent);
+
+        // 将搜索记录添加到历史记录中 2015/7/2 16:28
+        NavigatorEntity navigatorEntity = new NavigatorEntity();
+        navigatorEntity.setLat(String.valueOf(_lat))
+                .setLng(String.valueOf(_lng))
+                .setTime(String.valueOf(System.currentTimeMillis()))
+                .setSrcLoc(_txtSource.getText().toString())
+                .setDecLoc(_txtTarget.getText().toString());
+
+        long id = MainActivity.get_db().getDbManagerNavigatorHistory().add(navigatorEntity);
+        if (id > 0) { // 添加成功，刷新数据 2015/7/2 16:31
+            navigatorEntity.setId((int) id);
+            _mNavigatorListAdapter.add(0, navigatorEntity);
+            _mNavigatorListAdapter.notifyDataSetChanged();
+        }
     }
 
     /**
@@ -196,10 +259,113 @@ public class NavigatorConfigActivity extends Activity{
         finish();
     }
 
+    /**
+     * 清空历史 2015/7/2 16:42
+     * @param view
+     */
+    public void OnClear(View view) {
+        logger.debug("On click button to clear navigator history.");
+        MainActivity.get_db().getDbManagerNavigatorHistory().del();
+        _mNavigatorListAdapter.clear();
+        _mNavigatorListAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void finish() {
         logger.info("Finish.");
         super.finish();
         overridePendingTransition(R.anim.fadein, R.anim.fadeout); // 淡入淡出跳转方式
+    }
+
+    /**
+     * 列表适配器 2015/5/18 16:40
+     */
+    private class NavigatorListAdapter extends BaseAdapter {
+        private ArrayList<NavigatorEntity> _lstNavigators;
+        private LayoutInflater mInflator;
+
+        public NavigatorListAdapter() {
+            super();
+            _lstNavigators = new ArrayList<NavigatorEntity>();
+            mInflator = NavigatorConfigActivity.this.getLayoutInflater();
+        }
+
+        public void add(NavigatorEntity navigator) {
+            for (NavigatorEntity navigatorEntity: _lstNavigators) {
+                if (navigatorEntity.getId() == navigator.getId())
+                    return;
+            }
+
+            _lstNavigators.add(navigator);
+        }
+
+        public void add(int idx, NavigatorEntity navigator) {
+            for (NavigatorEntity navigatorEntity: _lstNavigators) {
+                if (navigatorEntity.getId() == navigator.getId())
+                    return;
+            }
+
+            _lstNavigators.add(idx, navigator);
+        }
+
+        public NavigatorEntity getNavigator(int position) {
+            return _lstNavigators.get(position);
+        }
+
+        public NavigatorEntity getDevice(int id) {
+            for (NavigatorEntity navigatorEntity: _lstNavigators) {
+                if (navigatorEntity.getId() == id)
+                    return navigatorEntity;
+            }
+
+            return null;
+        }
+
+        public void clear() {
+            _lstNavigators.clear();
+        }
+
+        @Override
+        public int getCount() {
+            return _lstNavigators.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return _lstNavigators.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            ViewHolder viewHolder;
+            if (view == null) {
+                view = mInflator.inflate(R.layout.fy_ping_an_list_item, null);
+                viewHolder = new ViewHolder();
+                viewHolder.txtSrcLoc = (TextView) view
+                        .findViewById(R.id.txtSrcLoc);
+                viewHolder.txtDecLoc = (TextView) view
+                        .findViewById(R.id.txtDecLoc);
+
+                view.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) view.getTag();
+            }
+
+            NavigatorEntity navigatorEntity = _lstNavigators.get(i);
+            viewHolder.txtSrcLoc.setText(navigatorEntity.getSrcLoc());
+            viewHolder.txtDecLoc.setText(navigatorEntity.getDecLoc());
+
+            return view;
+        }
+    }
+
+    static class ViewHolder {
+        TextView txtSrcLoc;
+        TextView txtDecLoc;
     }
 }

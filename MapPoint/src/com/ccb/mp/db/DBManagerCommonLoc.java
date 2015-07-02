@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.ccb.mp.activity.oper_loc.LocationEntity;
+import com.ccb.mp.activity.oper_loc.entity.LocationEntity;
 import com.ccb.mp.utils.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

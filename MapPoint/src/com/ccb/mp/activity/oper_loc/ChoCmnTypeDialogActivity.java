@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import com.ccb.mp.R;
+import com.ccb.mp.activity.oper_loc.entity.LocationEntity;
 import com.ccb.mp.task.activity_manager.ActivityManager;
 import com.ccb.mp.utils.Const;
 import org.slf4j.Logger;

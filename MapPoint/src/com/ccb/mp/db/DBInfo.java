@@ -15,7 +15,7 @@ public class DBInfo extends SQLiteOpenHelper{
     private static Logger logger = LoggerFactory
             .getLogger(DBInfo.class); // 日志对象
 
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 
     // 带全部参数的构造函数，此构造函数必不可少
     public DBInfo(Context context, String name, CursorFactory factory,
@@ -38,12 +38,20 @@ public class DBInfo extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         logger.info("Create a Database");
 
+        // 图点信息
         String sqlLocation = "create table IF NOT EXISTS common_location_info(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "search_sid varchar(50), lat varchar(50), lng varchar(50), time varchar(50), loc varchar(500), " +
                 "name varchar(50), tel varchar(50), desc varchar(500), type int)";
 
         //执行创建数据库操作
         db.execSQL(sqlLocation);
+
+        // 导航历史信息
+        String sqlNavigatorHistory = "create table IF NOT EXISTS navigator_config_info(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "search_sid varchar(50), lat varchar(50), lng varchar(50), time varchar(50), src_loc varchar(500), " +
+                "dec_loc varchar(500))";
+
+        db.execSQL(sqlNavigatorHistory);
     }
 
     /**
@@ -56,14 +64,14 @@ public class DBInfo extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //创建成功，日志输出提示
         logger.info("Update a Database");
-//        db.execSQL("alter table msg_urgent_info add search_sid varchar(50) default 16");
+//        db.execSQL("alter table msg_urgent_info add search_sid varchar(50) default 16"); // 增加字段
 
-//        String sqlLocation = "create table IF NOT EXISTS common_location_info(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                "search_sid varchar(50), lat varchar(50), lng varchar(50), time varchar(50), loc varchar(500), " +
-//                "name varchar(50), tel varchar(50), desc varchar(500), type int)";
-//
-//        // 执行创建数据库操作
-//        db.execSQL(sqlLocation);
+        // 导航历史信息 2015/7/2 15:58
+        String sqlNavigatorHistory = "create table IF NOT EXISTS navigator_config_info(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "search_sid varchar(50), lat varchar(50), lng varchar(50), time varchar(50), src_loc varchar(500), " +
+                "dec_loc varchar(500))";
+
+        db.execSQL(sqlNavigatorHistory);
     }
 
 }
