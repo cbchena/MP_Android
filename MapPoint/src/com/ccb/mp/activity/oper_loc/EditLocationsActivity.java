@@ -72,6 +72,17 @@ public class EditLocationsActivity extends Activity{
     }
 
     /**
+     * 清空历史 2015/7/2 16:42
+     * @param view
+     */
+    public void OnClear(View view) {
+        logger.debug("On click button to clear search history.");
+        MainActivity.get_db().getDbManagerCommonLoc().del();
+        _mCommonLocListAdapter.clear();
+        _mCommonLocListAdapter.notifyDataSetChanged();
+    }
+
+    /**
      * 绑定返回事件 2015/5/21 15:59
      * @param view
      */

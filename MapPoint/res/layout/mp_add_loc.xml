@@ -8,8 +8,8 @@
     <RelativeLayout
             android:id="@+id/rl_layout"
             android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/title_bar"
+            android:layout_height="35dp"
+            android:background="#ffe9ecec"
             android:gravity="center_vertical" >
 
         <ImageButton
@@ -18,7 +18,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:src="@drawable/chatting_btn_return"
-                android:background="@drawable/title_bar"
+                android:background="#ffe9ecec"
                 android:onClick="OnBack"
                 android:textColor="#fff"
                 android:textSize="14sp" />
@@ -29,8 +29,7 @@
                 android:layout_centerInParent="true"
                 android:text="添加地点"
                 android:id="@+id/title"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
     </RelativeLayout>
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"

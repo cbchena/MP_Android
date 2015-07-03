@@ -14,11 +14,13 @@ import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.poi.*;
 import com.ccb.mp.R;
+import com.ccb.mp.activity.main.MainActivity;
 import com.ccb.mp.utils.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 搜索窗口 2015/5/23 10:35
@@ -35,6 +37,9 @@ public class SearchDialogActivity extends Activity implements
 
     private ListView _lstView; // 列表
     private SearchLocListAdapter _mSearchLocListAdapter; // 检索列表适配器
+
+    private ListView _lstViewHistory; // 列表
+    private SearchLocListAdapter _mSearchHistoryLocListAdapter; // 检索历史记录列表适配器
 
     public static final int SEARCH_RESULT_OK = 81; // 搜查结果
 
@@ -78,9 +83,14 @@ public class SearchDialogActivity extends Activity implements
                 if (cs.length() <= 0) {
                     _mSearchLocListAdapter.clear();
                     _mSearchLocListAdapter.notifyDataSetChanged();
+
+                    _lstViewHistory.setVisibility(View.VISIBLE);
+                    _lstView.setVisibility(View.GONE);
                     return;
                 }
 
+                _lstViewHistory.setVisibility(View.GONE);
+                _lstView.setVisibility(View.VISIBLE);
                 _searchProcess(cs.toString());
             }
         });
@@ -91,18 +101,84 @@ public class SearchDialogActivity extends Activity implements
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 logger.debug("On click item.Position is {}.", i);
                 SearchLocationEntity searchLocationEntity = _mSearchLocListAdapter.getLocBypositon(i);
-                Intent intent = getIntent();
-                Bundle bundle1 = new Bundle();
-                bundle1.putDouble(Const.LAT, searchLocationEntity.getLatLng().latitude);
-                bundle1.putDouble(Const.LNG, searchLocationEntity.getLatLng().longitude);
-                intent.putExtra(Const.DATA, bundle1);
-                setResult(SearchDialogActivity.RESULT_OK, intent);
-                finish();
+                _searchLoc(searchLocationEntity, 1);
             }
         });
 
         _mSearchLocListAdapter = new SearchLocListAdapter(); // 初始化适配器
         _lstView.setAdapter(_mSearchLocListAdapter);
+
+        _lstViewHistory = (ListView) this.findViewById(R.id.lstHistoryItem);
+        _lstViewHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                logger.debug("On click history item.Position is {}.", i);
+                SearchLocationEntity searchLocationEntity = _mSearchHistoryLocListAdapter.getLocBypositon(i);
+                _searchLoc(searchLocationEntity, 2);
+            }
+        });
+
+        _mSearchHistoryLocListAdapter = new SearchLocListAdapter();
+        _lstViewHistory.setAdapter(_mSearchHistoryLocListAdapter);
+
+        // 获取数据 2015/7/3 9:45
+        _getData();
+    }
+
+    /**
+     * 查找位置 2015/7/3 9:28
+     * @param searchLocationEntity 查找的对象实体
+     * @param type 1 添加  2 修改
+     */
+    private void _searchLoc(SearchLocationEntity searchLocationEntity, int type) {
+        Intent intent = getIntent();
+        Bundle bundle = new Bundle();
+        bundle.putDouble(Const.LAT, searchLocationEntity.getLatLng().latitude);
+        bundle.putDouble(Const.LNG, searchLocationEntity.getLatLng().longitude);
+        intent.putExtra(Const.DATA, bundle);
+        setResult(SearchDialogActivity.RESULT_OK, intent);
+
+        // 将查找的位置资料记录到历史信息表 2015/7/3 9:47
+        if (type == 1) {
+            SearchLocationEntity searchLocEntity = new SearchLocationEntity();
+            searchLocEntity.setName(searchLocationEntity.getName())
+                    .setCity(searchLocationEntity.getCity())
+                    .setAddress(searchLocationEntity.getAddress())
+                    .setTime(searchLocationEntity.getTime())
+                    .setLatLng(searchLocationEntity.getLatLng());
+
+            long id = MainActivity.get_db().getDbManagerSearchHistory().add(searchLocEntity);
+            if (id > 0) { // 添加成功，刷新数据 2015/7/2 16:31
+                searchLocEntity.setId((int) id);
+                _mSearchHistoryLocListAdapter.addLoc(0, searchLocEntity);
+                _mSearchHistoryLocListAdapter.notifyDataSetChanged();
+            }
+        } else if (type == 2) {
+            searchLocationEntity.setTime(String.valueOf(System.currentTimeMillis()));
+            int count = MainActivity.get_db().getDbManagerSearchHistory().updata(searchLocationEntity);
+            if (count > 0) {
+                _getData(); // 刷新数据
+            }
+        }
+
+        finish();
+    }
+
+    /**
+     * 获取数据 2015/7/3 9:43
+     */
+    private void _getData() {
+        _lstViewHistory.setVisibility(View.VISIBLE);
+        _lstView.setVisibility(View.GONE);
+
+        _mSearchHistoryLocListAdapter.clear();
+
+        List<SearchLocationEntity> lstData = MainActivity.get_db().getDbManagerSearchHistory().getData();
+        for(SearchLocationEntity searchLocationEntity:lstData) {
+            _mSearchHistoryLocListAdapter.addLoc(searchLocationEntity);
+        }
+
+        _mSearchHistoryLocListAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -117,6 +193,17 @@ public class SearchDialogActivity extends Activity implements
                 .city(_city)
                 .keyword(key)
                 .pageNum(0));
+    }
+
+    /**
+     * 清空历史 2015/7/2 16:42
+     * @param view
+     */
+    public void OnClear(View view) {
+        logger.debug("On click button to clear search history.");
+        MainActivity.get_db().getDbManagerSearchHistory().del();
+        _mSearchHistoryLocListAdapter.clear();
+        _mSearchHistoryLocListAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -157,7 +244,8 @@ public class SearchDialogActivity extends Activity implements
                     searchLocationEntity.setName(poiInfo.name)
                             .setAddress(poiInfo.address)
                             .setCity(poiInfo.city)
-                            .setLatLng(poiInfo.location);
+                            .setLatLng(poiInfo.location)
+                            .setTime(String.valueOf(System.currentTimeMillis()));
 
                     _mSearchLocListAdapter.addLoc(searchLocationEntity);
                 }
@@ -208,6 +296,10 @@ public class SearchDialogActivity extends Activity implements
 
         public void addLoc(SearchLocationEntity searchLocationEntity) {
             mLoc.add(searchLocationEntity);
+        }
+
+        public void addLoc(int idx, SearchLocationEntity searchLocationEntity) {
+            mLoc.add(idx, searchLocationEntity);
         }
 
         public SearchLocationEntity getLocBypositon(int position) {

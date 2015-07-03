@@ -2,14 +2,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/layout_content"
+    android:background="#ffcecece"
     android:orientation="vertical">
 
     <!-- 标题栏 -->
     <RelativeLayout
             android:id="@+id/rl_layout"
             android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/title_bar"
+            android:layout_height="35dp"
+            android:background="#ffe9ecec"
             android:gravity="center_vertical" >
 
         <ImageButton
@@ -18,7 +19,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:src="@drawable/chatting_btn_return"
-                android:background="@drawable/title_bar"
+                android:background="#ffe9ecec"
                 android:onClick="OnBack"
                 android:textColor="#fff"
                 android:textSize="14sp" />
@@ -29,16 +30,31 @@
                 android:layout_centerInParent="true"
                 android:text="图点"
                 android:id="@+id/title"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
     </RelativeLayout>
 
-    <ListView android:id="@+id/lstItem"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:divider="@null">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="#ffffffff"
+                  android:layout_margin="7dp"
+                  android:orientation="vertical">
 
-    </ListView>
+        <ListView android:id="@+id/lstItem"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:background="#ffffffff"
+                  android:divider="@null">
+
+        </ListView>
+
+        <Button android:layout_width="match_parent"
+                android:layout_height="50dp"
+                style="@style/ButtonMain"
+                android:id="@+id/btnClear"
+                android:onClick="OnClear"
+                android:text="清空历史"/>
+
+    </LinearLayout>
 
 </LinearLayout>

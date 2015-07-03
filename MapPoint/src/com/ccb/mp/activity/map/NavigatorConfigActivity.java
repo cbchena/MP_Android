@@ -344,7 +344,7 @@ public class NavigatorConfigActivity extends Activity{
         public View getView(int i, View view, ViewGroup viewGroup) {
             ViewHolder viewHolder;
             if (view == null) {
-                view = mInflator.inflate(R.layout.fy_ping_an_list_item, null);
+                view = mInflator.inflate(R.layout.mp_navigator_config_list_item, null);
                 viewHolder = new ViewHolder();
                 viewHolder.txtSrcLoc = (TextView) view
                         .findViewById(R.id.txtSrcLoc);

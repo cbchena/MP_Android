@@ -7,6 +7,9 @@ import com.baidu.mapapi.model.LatLng;
  */
 public class SearchLocationEntity {
 
+    private int id;
+    private String searchId;
+    private String time;
     private String city;
     private String name;
     private String address;
@@ -18,6 +21,33 @@ public class SearchLocationEntity {
 
     public SearchLocationEntity setCity(String city) {
         this.city = city;
+        return this;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public SearchLocationEntity setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getSearchId() {
+        return searchId;
+    }
+
+    public SearchLocationEntity setSearchId(String searchId) {
+        this.searchId = searchId;
+        return this;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public SearchLocationEntity setTime(String time) {
+        this.time = time;
         return this;
     }
 

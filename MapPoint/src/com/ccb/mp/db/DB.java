@@ -10,6 +10,7 @@ public class DB {
 
     private DBManagerCommonLoc dbManagerCommonLoc; // 常用地点管理
     private DBManagerNavigatorHistory dbManagerNavigatorHistory; // 导航历史信息管理
+    private DBManagerSearchHistory dbManagerSearchHistory; // 搜索历史信息管理
 
     public DB(Context context) {
         if (dbManagerCommonLoc == null)
@@ -17,6 +18,9 @@ public class DB {
 
         if (dbManagerNavigatorHistory == null)
             dbManagerNavigatorHistory = new DBManagerNavigatorHistory(context, Const.DB_NAME);
+
+        if (dbManagerSearchHistory == null)
+            dbManagerSearchHistory = new DBManagerSearchHistory(context, Const.DB_NAME);
     }
 
     public DBManagerCommonLoc getDbManagerCommonLoc() {
@@ -25,5 +29,9 @@ public class DB {
 
     public DBManagerNavigatorHistory getDbManagerNavigatorHistory() {
         return dbManagerNavigatorHistory;
+    }
+
+    public DBManagerSearchHistory getDbManagerSearchHistory() {
+        return dbManagerSearchHistory;
     }
 }

@@ -208,7 +208,7 @@ public class DBManagerCommonLoc {
         logger.debug("Delete message common location.");
 
         SQLiteDatabase db = _dbInfo.getReadableDatabase();
-        db.delete(table, "", new String[]{});
+        db.delete(table, "search_sid=?", new String[]{Const.APP_LOGIN_SID});
         db.close();
     }
 }

@@ -15,7 +15,7 @@ public class DBInfo extends SQLiteOpenHelper{
     private static Logger logger = LoggerFactory
             .getLogger(DBInfo.class); // 日志对象
 
-    private static final int VERSION = 2;
+    private static final int VERSION = 3;
 
     // 带全部参数的构造函数，此构造函数必不可少
     public DBInfo(Context context, String name, CursorFactory factory,
@@ -52,6 +52,13 @@ public class DBInfo extends SQLiteOpenHelper{
                 "dec_loc varchar(500))";
 
         db.execSQL(sqlNavigatorHistory);
+
+        // 搜索历史信息
+        String sqlSearchHistory = "create table IF NOT EXISTS search_loc_info(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "search_sid varchar(50), lat varchar(50), lng varchar(50), time varchar(50), loc varchar(500), " +
+                "name varchar(100), city varchar(100))";
+
+        db.execSQL(sqlSearchHistory);
     }
 
     /**
@@ -67,11 +74,18 @@ public class DBInfo extends SQLiteOpenHelper{
 //        db.execSQL("alter table msg_urgent_info add search_sid varchar(50) default 16"); // 增加字段
 
         // 导航历史信息 2015/7/2 15:58
-        String sqlNavigatorHistory = "create table IF NOT EXISTS navigator_config_info(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "search_sid varchar(50), lat varchar(50), lng varchar(50), time varchar(50), src_loc varchar(500), " +
-                "dec_loc varchar(500))";
+//        String sqlNavigatorHistory = "create table IF NOT EXISTS navigator_config_info(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "search_sid varchar(50), lat varchar(50), lng varchar(50), time varchar(50), src_loc varchar(500), " +
+//                "dec_loc varchar(500))";
+//
+//        db.execSQL(sqlNavigatorHistory);
 
-        db.execSQL(sqlNavigatorHistory);
+        // 搜索历史信息 2015/7/3 9:33
+        String sqlSearchHistory = "create table IF NOT EXISTS search_loc_info(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "search_sid varchar(50), lat varchar(50), lng varchar(50), time varchar(50), loc varchar(500), " +
+                "name varchar(100), city varchar(100))";
+
+        db.execSQL(sqlSearchHistory);
     }
 
 }
