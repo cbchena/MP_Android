@@ -18,6 +18,7 @@ import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
 import com.ccb.mp.R;
 import com.ccb.mp.activity.map.NavigatorConfigActivity;
+import com.ccb.mp.activity.me.MeActivity;
 import com.ccb.mp.activity.oper_loc.AddLocationActivity;
 import com.ccb.mp.activity.oper_loc.EditLocationActivity;
 import com.ccb.mp.activity.oper_loc.EditLocationsActivity;
@@ -65,6 +66,7 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
     private Button _btnTrack; // 到这去
     private Button _btnLocations; // 图点
     private Button _btnCurLocation; // 定位当前位置
+    private Button _btnMe; // 个人中心
     private LinearLayout _ll_search; // 查找布局
     private LinearLayout _ll_loc;  // 显示位置布局
     private TextView _txtLoc; // 显示位置
@@ -157,6 +159,14 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
             @Override
             public void onClick(View view) {
                 OnCurLocation(view);
+            }
+        });
+
+        this._btnMe = (Button) this.findViewById(R.id.btnMe);
+        this._btnMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OnMe(view);
             }
         });
 
@@ -605,6 +615,16 @@ public class MainActivity extends Activity implements BaiduMap.OnMapClickListene
         logger.debug("Click button back current location.");
         _locationClient.start();
         _locationClient.requestLocation();
+    }
+
+    /**
+     * 个人中心 2015/7/6 14:53
+     * @param view
+     */
+    public void OnMe(View view) {
+        logger.debug("On click button to self center.");
+        Intent intent =  new Intent(MainActivity.this, MeActivity.class);
+        startActivity(intent);
     }
 
     /**

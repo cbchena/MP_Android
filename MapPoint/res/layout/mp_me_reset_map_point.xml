@@ -1,0 +1,87 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_content"
+    android:orientation="vertical">
+
+    <!-- 标题栏 -->
+    <RelativeLayout
+            android:id="@+id/rl_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:background="#ffe9ecec"
+            android:gravity="center_vertical" >
+
+        <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:src="@drawable/chatting_btn_return"
+                android:background="#ffe9ecec"
+                android:onClick="OnBack"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="重置图点"
+                android:id="@+id/title"
+                android:textSize="16sp" />
+    </RelativeLayout>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="50dp"
+            style="@style/ButtonMain"
+            android:id="@+id/btnClearSearch"
+            android:onClick="OnClearSearch"
+            android:text="清空搜索历史"/>
+
+    <View  android:layout_height="1px"
+           android:layout_marginLeft="15dp"
+           android:layout_marginRight="15dp"
+           android:layout_width="match_parent"
+           android:background="#ffc3c3c3" />
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="50dp"
+            style="@style/ButtonMain"
+            android:id="@+id/btnClearNavigator"
+            android:onClick="OnClearNavigator"
+            android:text="清空导航历史"/>
+
+    <View  android:layout_height="1px"
+           android:layout_marginLeft="15dp"
+           android:layout_marginRight="15dp"
+           android:layout_width="match_parent"
+           android:background="#ffc3c3c3" />
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="50dp"
+            style="@style/ButtonMain"
+            android:id="@+id/btnClearMP"
+            android:onClick="OnClearMP"
+            android:text="清空图点"/>
+
+    <View  android:layout_height="1px"
+           android:layout_marginLeft="15dp"
+           android:layout_marginRight="15dp"
+           android:layout_width="match_parent"
+           android:background="#ffc3c3c3" />
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="50dp"
+            style="@style/ButtonMain"
+            android:id="@+id/btnClear"
+            android:onClick="OnClear"
+            android:text="一键清除"/>
+
+    <View  android:layout_height="1px"
+           android:layout_marginLeft="15dp"
+           android:layout_marginRight="15dp"
+           android:layout_width="match_parent"
+           android:background="#ffc3c3c3" />
+
+</LinearLayout>

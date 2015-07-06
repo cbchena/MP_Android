@@ -149,13 +149,13 @@
             </LinearLayout>
         </LinearLayout>
 
-        <Button android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+        <Button android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:id="@+id/btnCurLocation"
-                android:layout_marginTop="100dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/icon_compass"
-                android:layout_alignRight="@+id/bmapView"/>
+                android:layout_marginBottom="100dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/icon_compass4"
+                android:layout_alignBottom="@+id/bmapView"/>
 
         <ImageButton android:layout_width="40dp"
                      android:layout_height="40dp"

@@ -69,6 +69,13 @@
                   android:configChanges="keyboardHidden|orientation"
                   android:screenOrientation="portrait" />
         <activity android:name=".activity.poi.SearchDialogActivity" />
+        <activity android:name=".activity.me.MeActivity" />
+        <activity android:name=".activity.me.ExitDialogActivity"
+                  android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+                  android:alwaysRetainTaskState="true"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".activity.me.ResetMapPointActivity" />
 
         <!--begin 百度地图导航 -->
         <activity
