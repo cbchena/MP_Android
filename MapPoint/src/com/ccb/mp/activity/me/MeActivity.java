@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.ccb.mp.R;
+import com.ccb.mp.activity.offline_map.OfflineBaiduActivity;
 import com.ccb.mp.task.activity_manager.ActivityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ public class MeActivity extends Activity {
 
     private static final int ITEM_EXIT = 1; // 退出
     private static final int ITEM_CLEAR = 2; // 清空数据
+    private static final int ITEM_OFFLINE_MAP = 3; // 离线地图
 
     private ListView _lvItem; // 显示消息列表
     private MeMainItemAdapter _itemAdapter; // 适配器
@@ -54,6 +56,9 @@ public class MeActivity extends Activity {
                         break;
                     case ITEM_CLEAR: // 重置图点
                         startActivity(new Intent(MeActivity.this, ResetMapPointActivity.class));
+                        break;
+                    case ITEM_OFFLINE_MAP: // 离线地图
+                        startActivity(new Intent(MeActivity.this, OfflineBaiduActivity.class));
                         break;
                 }
             }
@@ -90,6 +95,11 @@ public class MeActivity extends Activity {
         itemEntity = new MeItemEntity();
         itemEntity.setId(ITEM_CLEAR);
         itemEntity.setTitle("重置图点");
+        lstData.add(itemEntity);
+
+        itemEntity = new MeItemEntity();
+        itemEntity.setId(ITEM_OFFLINE_MAP);
+        itemEntity.setTitle("离线地图");
         lstData.add(itemEntity);
 
         itemEntity = new MeItemEntity();
